@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/common::head}"></head>
+
+<body>
+    <div class="info-image">
+        <img style="margin-top: -60px; height: 450px;" th:src="@{/api/competition/image(id=${competition.id})}" alt="Image">
+    </div>
+
+    <div class="competition-card">
+        <h1>
+            <span th:text="${competition.name}"></span>
+        </h1>
+
+        <p>
+            <span th:text="${competition.description}"></span>
+        </p>
+
+        <p>
+            Cost: <span th:text="${competition.cost}"></span>
+        </p>
+    </div>
+</body>
+
+</html>

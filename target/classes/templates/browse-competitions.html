@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 94%;">
+
+<head>
+    <head th:replace="~{fragments/common::head}"></head>
+    <link rel="stylesheet" href="/css/browse.css"/>
+    <script src="scripts/popup.js"></script>
+</head>
+
+<body style="height: 94%;">
+    <div class="all-content" style="margin-bottom: -20px;">
+        <style>
+            .tag span {
+                text-wrap: nowrap;
+            }
+
+            @media screen and (max-width: 600px) {
+                #banner-container {
+                    display: none;
+                }
+
+                .hide-data {
+                    display: none;
+                }
+
+                #frame {
+                    left: 0;
+                    width: 99%;
+                }
+            }
+        </style>
+
+        <div th:if="${type.name()=='COMPETITION'}" class="video-parent">
+            <video playsinline autoplay muted nocontrols loop>
+                <source src="video/Състезания.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div th:if="${type.name()=='CONCOURSE'}" class="video-parent">
+            <video playsinline autoplay muted nocontrols loop>
+                <source src="video/Конкурси.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div th:if="${type.name()=='OLYMPIAD'}" class="video-parent">
+            <video playsinline autoplay muted nocontrols loop>
+                <source src="video/Олимпиади.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <header th:replace="~{fragments/common::nav}"></header>
+
+        <div style="visibility: hidden;" id="page-display">
+            <div class="dark-overlay">
+                <h1 class="h1-close-btn-parent">
+                    <a id="close-btn" href="#">❎Close</a>
+                </h1>
+            </div>
+            <iframe id="frame" th:src="@{/competition-info-min/2}"></iframe>
+        </div>
+
+        <div style="visibility: hidden;" id="page-display2">
+            <div class="dark-overlay">
+                <h1 class="h1-close-btn-parent">
+                    <a id="close-btn2" href="#">❎Close</a>
+                </h1>
+            </div>
+            <iframe id="frame-review" class="frame-box" th:src="@{/review}"></iframe>
+        </div>
+
+        <form th:if="${@loggedUser.logged and @loggedUser.host}" style="display: grid; grid-template-columns: auto auto auto;">
+            <a class="add-listing-btn" th:if="${@loggedUser.host}" th:href="@{/add-competition}">+ Добави събитие</a>
+            <a style="padding: 20px; color: white; background-color: green; border-radius: 20px;"
+                th:if="${@loggedUser.admin}" th:href="@{/add-category}">✎ Добавяне на категория</a>
+        </form>
+
+        <div style="padding: 20px; background-color: var(--primary-color); border-radius: 20px; margin: 20px; margin-left: -10px;">
+            <div th:if="${type.name()=='COMPETITION'}">
+                <a th:each="currCategory : ${categories}"
+                    class = "tag"
+                    th:href="@{/browse-competitions(id=${currCategory.id})}">
+                    <span th:text="${currCategory.name}"></span>
+                </a>
+            </div>
+
+            <div th:if="${type.name()=='CONCOURSE'}">
+                <a th:each="currCategory : ${categories}"
+                class = "tag"
+                    th:href="@{/browse-concourses(id=${currCategory.id})}">
+                    <span th:text="${currCategory.name}"></span>
+                </a>
+            </div>
+
+            <div th:if="${type.name()=='OLYMPIAD'}">
+                <a th:each="currCategory : ${categories}"
+                class = "tag"
+                    th:href="@{/browse-olympiads(id=${currCategory.id})}">
+                    <span th:text="${currCategory.name}"></span>
+                </a>
+            </div>
+        </div>
+
+        <div th:each="currCompetition : ${competitions}">
+            <div th:if="${type == currCompetition.competitionType AND (filter == -1 OR filter == currCompetition.competitionCategory.id)}" class="competition-listing">
+                <div class="container-image">
+                    <img th:src="@{/api/competition/image(id=${currCompetition.id})}" alt="Image">
+                </div>
+
+                <div class="listing-content">
+                    <h1>
+                        <a class="competition-link" th:id="${currCompetition.id}" href="javascript:void(0)"><span
+                                th:text="${currCompetition.title}"></span></a>
+                    </h1>
+                    <p class="hide-data">
+                        <span th:text="${currCompetition.competitionCategory.name}"></span>, добавено от <span
+                            th:text="${currCompetition.addedBy.username}"></span>
+                        <a th:if="${@loggedUser.logged and @loggedUser.username!=currCompetition.addedBy.username}"
+                            th:href="@{/follow/{username}(username=${currCompetition.addedBy.username})}"
+                            class="follow-btn">Последвай</a>
+                    </p>
+                    <p>
+                        <span th:text="${#temporals.format(currCompetition.date, 'dd/MM/YY')}"></span><br>
+                        <span th:text="${#temporals.format(currCompetition.date, 'HH:mm')}"></span>
+                    </p>
+                </div>
+
+                <div class="buy-section">
+                    <span class="hide-data" th:text="${currCompetition.getAverageRating()}"></span>
+                    <a th:if="${@loggedUser.logged and not @loggedUser.isAdmin and @loggedUser.username != currCompetition.addedBy.username}"
+                        class="review-btn" th:id="${currCompetition.id + ' review'}" href="javascript:void(0)">🚩
+                        Отзив</a>
+                    <a th:if="${@loggedUser.logged and @loggedUser.isAdmin}"
+                        th:href="@{/remove/{id}(id=${currCompetition.id})}" onclick="return confirm('Сигурен/на ли сте?')">❌Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div id="banner-container">
+        <div th:if="${type.name()=='COMPETITION'}" class="banner-img" style="background-image: url(../img/competitions.jpg); background-position-y: -150px;"></div>
+        <div th:if="${type.name()=='CONCOURSE'}" class="banner-img" style="background-image: url(../img/concourses.jpg); background-position-y: -300px;"></div>
+        <div th:if="${type.name()=='OLYMPIAD'}" class="banner-img" style="background-image: url(../img/olympiads.jpg); background-position-y: -400px;"></div>
+    </div>
+
+    <script>
+        document.getElementById("close-btn2").onclick = function (e) { return myHandler(e); };
+    </script>
+
+    <footer th:replace="~{fragments/common::footer}"></footer>
+</body>
+
+</html>

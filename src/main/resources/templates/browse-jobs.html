@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 94%;">
+
+<head>
+
+    <head th:replace="~{fragments/common::head}"></head>
+    <link rel="stylesheet" href="/css/browse.css"/>
+    <script src="scripts/popup.js"></script>
+</head>
+
+<body style="height: 94%;">
+    <div class="all-content" style="margin-bottom: -20px;">
+        <div class="video-parent">
+            <video playsinline autoplay muted nocontrols loop>
+                <source src="video/Стажове.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <header th:replace="~{fragments/common::nav}"></header>
+
+        <style>
+            .page {
+                width: 100%;
+                position: fixed;
+                height: 100%;
+                left: 0%;
+                top: 0%;
+                backdrop-filter: brightness(50%);
+            }
+
+            .close-btn-parent {
+                position: fixed;
+                
+                left: 77%;
+                top: 8%;
+                
+                background-color: white;
+                
+                padding: 10px;
+                
+                border-radius: 20px;
+                
+                font-size: 20px;
+            }
+
+            @media screen and (max-width: 600px) {
+                #bg-img {
+                    background-position-x: -200px;
+                }
+
+                #frame {
+                    left: 0%;
+                    width: 85%;
+                }
+
+                .close-btn-parent {
+                    left: 55%;
+                    top: 8%;
+                }
+            }
+        </style>
+
+        <div style="visibility: hidden;" id="page-display">
+            <div class="page">
+                <h1 class="close-btn-parent">
+                    <a id="close-btn" href="#">❎Затвори</a>
+                </h1>
+            </div>
+            <iframe id="frame" th:src="@{/job-info-min/2}"></iframe>
+        </div>
+
+        <div style="visibility: hidden;" id="page-display2">
+            <div class="dark-overlay">
+                <h1 class="h1-close-btn-parent">
+                    <a id="close-btn2" href="#">❎Затвори</a>
+                </h1>
+            </div>
+            <iframe id="frame-review" class="frame-box" th:src="@{/review}"></iframe>
+        </div>
+
+        <form th:if="${@loggedUser.logged and @loggedUser.host}">
+            <a class="add-listing-btn" th:if="${@loggedUser.host}" th:href="@{/add-job}">+ Добавяне на обява за стаж</a>
+        </form>
+
+        <div th:each="currJob : ${jobs}">
+            <div class="competition-listing">
+                <div class="container-image">
+                    <img th:src="@{/api/job/image(id=${currJob.id})}" alt="Image">
+                </div>
+
+                <div class="listing-content">
+                    <h1>
+                        <a class="job-link" th:id="${currJob.id}" href="javascript:void(0)"><span
+                                th:text="${currJob.title}"></span></a>
+                    </h1>
+                    <p>
+                        добавено от <span th:text="${currJob.addedBy.username}"></span>
+                        <a th:if="${@loggedUser.logged and @loggedUser.username!=currJob.addedBy.username}"
+                            th:href="@{/follow/{username}(username=${currJob.addedBy.username})}"
+                            class="follow-btn">Последвай</a>
+                    </p>
+                    <p>
+                    </p>
+                </div>
+
+                <div class="buy-section">
+                    <a th:if="${@loggedUser.logged and not @loggedUser.isAdmin and @loggedUser.username != currJob.addedBy.username}"
+                        class="review-btn" th:id="${currJob.id + ' review'}" href="javascript:void(0)">
+                        Отзив</a>
+                    <a th:if="${@loggedUser.logged and @loggedUser.isAdmin}"
+                        th:href="@{/remove-job/{id}(id=${currJob.id})}">❌Delete</a>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <br>
+    </div>
+
+    <script>
+        document.getElementById("close-btn2").onclick = function (e) { return myHandler(e); };
+    </script>
+
+    <footer th:replace="~{fragments/common::footer}"></footer>
+</body>
+
+</html>

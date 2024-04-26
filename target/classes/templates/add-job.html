@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/common::head}"></head>
+
+<body>
+    <header th:replace="~{fragments/common::nav}"></header>
+
+    <h1>
+        Добави обява за стаж
+    </h1>
+
+    <div style="margin-left: 20px;" th:if="${error}" class="text-danger">
+        Обявата за стаж не може да бъде добавена!
+    </div>
+
+    <form class="add-box-shadow" th:object="${jobAddBindingModel}" th:method="POST" th:action="@{/add-job}" enctype="multipart/form-data">
+        <label>Заглавие на обявата:</label>
+        <input th:field="*{title}" type="text" id="title" name="title" th:errorclass="bg-danger">
+        <br th:if="${#fields.hasErrors('title')}">
+        <small th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger">Username error message</small>
+
+        <label>Линк:</label>
+        <input th:field="*{link}" type="text" id="link" name="link" th:errorclass="bg-danger">
+        <br th:if="${#fields.hasErrors('link')}">
+        <small th:if="${#fields.hasErrors('link')}" th:errors="*{link}" class="text-danger">Username error message</small>
+
+        <label>Описание:</label>
+        <input th:field="*{description}" type="text" id="description" name="description" th:errorclass="bg-danger">
+        <br th:if="${#fields.hasErrors('description')}">
+        <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger">Username error message</small>
+
+        <label>Изображение: </label>
+        <input th:field="*{filename}" type="file" id="myFile" name="filename" th:errorclass="bg-danger">
+        <br th:if="${#fields.hasErrors('filename')}">
+        <small th:if="${#fields.hasErrors('filename')}" th:errors="*{filename}" class="text-danger">Username error message</small>
+
+        <!-- <br th:if="${#fields.hasErrors('category')}"> -->
+        <!-- <small th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="text-danger">Username error message</small> -->
+
+        <input type="submit" value="Добави обява!" class="btn">
+    </form>
+</body>
+
+</html>

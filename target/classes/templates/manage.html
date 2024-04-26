@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html style="height: 94%;" lang="en">
+
+<head>
+
+    <head th:replace="~{fragments/common::head}"></head>
+</head>
+
+<body style="height: 94%;">
+    <div class="all-content">
+        <header th:replace="~{fragments/common::nav}"></header>
+
+        <h1>
+            <span style="font-size: 50px;">Manage competitions</span>
+            <a style="font-size: 20px; background-color: yellow; border-radius: 20px; text-decoration: none; color: black;" th:href="@{/add-competition}">Host competition</a>
+        </h1>
+
+        <div th:each="currcompetition : ${competitions}">
+            <div th:if="${currcompetition.addedBy.username == @loggedUser.username or @loggedUser.isAdmin}"
+                class="competition-listing">
+                <div class="container-image">
+                    <img th:src="@{/api/competition/image(id=${currcompetition.id})}" alt="Image">
+                </div>
+
+                <div class="listing-content">
+                    <h1>
+                        <a th:href="@{/competition-info/{id}(id=${currcompetition.id})}"><span
+                                th:text="${currcompetition.name}"></span></a>
+                    </h1>
+                    <p>
+                        <span th:text="${currcompetition.category}"></span>
+                    </p>
+                    <p>
+                        <span th:text="${#temporals.format(currcompetition.start, 'dd/MM/YY')}"></span> - <span th:text="${#temporals.format(currcompetition.end, 'dd/MM/YY')}"></span><br>
+                        <span th:text="${#temporals.format(currcompetition.start, 'HH:mm')}"></span> - <span th:text="${#temporals.format(currcompetition.end, 'HH:mm')}"></span>
+                    </p>
+                </div>
+
+                <div class="buy-section">
+                    <h2><span th:text="${currcompetition.participants.size()}"></span> participants</h2>
+                    <a th:href="@{/remove/{id}(id=${currcompetition.id})}"><input
+                            style="background-color: red;" type="button" value="Remove"
+                            class="btn home-btn"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/common::footer}"></footer>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+.form-div {
+    padding: 20px;
+
+    padding-top: 40px;
+    padding-bottom: 60px;
+
+    margin: 20px;
+    margin-top: 30px;
+
+    border-radius: 20px;
+
+    background: linear-gradient(90deg, var(--lgreen), transparent);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    box-shadow: var(--shadow-color) 0px 0px 50px 0px;
+}
+
+.form-content {
+    width: 800px;
+}
+
+@media screen and (max-width: 600px) {
+    .form-div {
+        flex-direction: column;
+    }
+
+    .form-content {
+        width: 100%;
+    }
+
+    .form-container form {
+        margin: 0px;
+    }
+
+    input {
+        width: 50%;
+    }
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/common::head}"></head>
+
+<body>
+    <header th:replace="~{fragments/common::nav}"></header>
+
+    <h1>
+        Добави категория
+    </h1>
+
+    <div style="margin-left: 20px;" th:if="${error}" class="text-danger">
+        Категорията не може да бъде добавена!
+    </div>
+
+    <form class="add-box-shadow" th:object="${categoryAddBindingModel}" th:method="POST"
+        th:action="@{/add-category}">
+        <label>Име на категорията:</label>
+        <input th:field="*{name}" type="text" id="name" name="name" th:errorclass="bg-danger">
+        <br th:if="${#fields.hasErrors('name')}">
+        <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Username error
+            message</small>
+
+        <input type="submit" value="Добави категория!" class="btn">
+    </form>
+
+    <h1>
+        Налични категории
+    </h1>
+
+    <p>
+        <div th:each="currCategory : ${categories}" style="display: inline;">
+            <span
+                class = "tag"
+                th:text="${currCategory.name}">
+            </span>
+        </div>
+    </p>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/common::head}"></head>
+
+<body>
+    <div class="info-image">
+        <img th:src="@{/api/competition/image(id=${competition.id})}" alt="Image">
+    </div>
+
+    <div class="competition-card">
+        <h1>
+            <span th:text="${competition.title}"></span>
+        </h1>
+
+        <p>
+            <span th:text="${competition.description}"></span>
+        </p>
+
+        <p>
+            <a th:href="${competition.link}" target="_blank" style="color: blue; text-decoration: underline;">Повече информация</a>
+        </p>
+
+        <a th:href="@{/enroll/{id}(id=${competition.id})}"><input type="button" value="Enroll" class="btn home-btn"></a>
+    </div>
+</body>
+
+</html>

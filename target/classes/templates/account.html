@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html style="height: 94%;" lang="en">
+
+<head th:replace="~{fragments/common::head}"></head>
+
+<body style="height: 94%;">
+    <div class="all-content">
+        <header th:replace="~{fragments/common::nav}"></header>
+
+        <style>
+            @media screen and (max-width: 600px) {
+                #user-container {
+                    flex-direction: column-reverse;
+                }
+
+                .mobile-hide {
+                    display: none;
+                }
+
+                .generic-gradient {
+                    width: 100%;
+                    padding: 0px;
+                    margin: 0px;
+                }
+            }
+        </style>
+
+        <div id="user-container" style="
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 700px;
+        ">
+            <h1 class="icon mobile-hide" style="font-size: 500px;">
+                👤
+            </h1>
+
+            <div class="generic-gradient">
+                <h1 style="display: flex; align-items: center;">
+                    <span th:text="${user.username}" /><p></p> ( <span th:text="${user.firstName}"/> <span style="font-size: 10px;">ㅤ</span> <span th:text="${user.lastName}"/> )
+                </h1>
+
+                <p>
+                    Имейл: <span th:text="${user.email}" /><br><br>
+                </p>
+
+                <form th:method="POST" th:action="@{/logout}">
+                    <input type="submit" value="Изход">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/common::footer}"></footer>
+</body>
+
+</html>

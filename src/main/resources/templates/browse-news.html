@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 94%;">
+
+<head>
+
+    <head th:replace="~{fragments/common::head}"></head>
+    <link rel="stylesheet" href="/css/browse.css"/>
+    <script src="scripts/popup.js"></script>
+</head>
+
+<body style="height: 94%; overflow-x: hidden;">
+    <div class="all-content" style="margin-bottom: -20px;">
+        <div class="video-parent">
+            <video playsinline autoplay muted nocontrols loop>
+                <source src="video/News.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <header th:replace="~{fragments/common::nav}"></header>
+
+        <style>
+            .news-area {
+                width: 99%;
+                
+                display: grid;
+                grid-template-columns: repeat(3, 33%);
+                grid-gap: 20px;
+            }
+
+            @media screen and (max-width: 600px) {
+                .news-area {
+                    width: 99%;
+                    
+                    display: grid;
+                    grid-template-columns: repeat(1, 99%);
+                    grid-gap: 20px;
+                }
+
+                #frame {
+                    left: 0%;
+
+                    width: 99%;
+                }
+            }
+        </style>
+
+        <div style="visibility: hidden;" id="page-display">
+            <div class="dark-overlay">
+                <h1 class="h1-close-btn-parent">
+                    <a id="close-btn" href="#">❎Close</a>
+                </h1>
+            </div>
+            <iframe id="frame" th:src="@{/news-info-min/2}"></iframe>
+        </div>
+
+        <div style="visibility: hidden;" id="page-display2">
+            <div class="dark-overlay">
+                <h1 class="h1-close-btn-parent">
+                    <a id="close-btn2" href="#">❎Close</a>
+                </h1>
+            </div>
+            <iframe id="frame-review" class="frame-box" th:src="@{/review}"></iframe>
+        </div>
+
+        <form th:if="${@loggedUser.logged and @loggedUser.host}">
+            <a class="add-listing-btn" th:if="${@loggedUser.host}" th:href="@{/add-news}">+ Добавяне на новина</a>
+        </form>
+
+        <div class="news-area">
+            <div th:each="currNews : ${news}">
+                <div class="competition-listing" style="flex-direction: column; height: 100%;">
+                    <div class="container-image" style="width: 100%; height: 100%; border-radius: 20px;">
+                        <img th:src="@{/api/news/image(id=${currNews.id})}" style="border-radius: 20px;" alt="Image">
+                    </div>
+
+                    <div class="listing-content" style="width: 100%;">
+                        <h1>
+                            <a class="news-link" th:id="${currNews.id}" href="javascript:void(0)"><span
+                                    th:text="${currNews.title}"></span></a>
+                        </h1>
+                        <p>
+                            добавено от <span th:text="${currNews.addedBy.username}"></span>
+                            <a th:if="${@loggedUser.logged and @loggedUser.username!=currNews.addedBy.username}"
+                                th:href="@{/follow/{username}(username=${currNews.addedBy.username})}"
+                                class="follow-btn">Последвай</a>
+                        </p>
+                        <p>
+                        </p>
+                    </div>
+
+                    <div class="buy-section">
+                        <a th:if="${@loggedUser.logged and not @loggedUser.isAdmin and @loggedUser.username != currNews.addedBy.username}"
+                            class="review-btn" th:id="${currNews.id + ' review'}" href="javascript:void(0)">
+                            Отзив</a>
+                        <a th:if="${@loggedUser.logged and @loggedUser.isAdmin}"
+                            th:href="@{/remove/{id}(id=${currNews.id})}" onclick="return confirm('Сигурен/на ли сте?')">❌Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="banner-img" style="background-image: url(../img/home_bg.jpg); background-position-y: -150px;"></div>
+
+    <br>
+    <br>
+
+    <script>
+        document.getElementById("close-btn2").onclick = function (e) { return myHandler(e); };
+    </script>
+
+    <footer th:replace="~{fragments/common::footer}"></footer>
+</body>
+
+</html>

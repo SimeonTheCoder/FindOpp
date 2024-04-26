@@ -1,0 +1,41 @@
+.frame-box {
+    position: fixed;
+
+    background-color: white;
+    box-shadow: #0000009c 0px 0px 200px 0px;
+
+    border: 0px;
+    border-radius: 20px;
+
+    width: 70%;
+    height: 70%;
+    
+    left: 15%;
+    top: 15%;
+}
+
+.dark-overlay {
+    position: fixed; 
+    
+    width: 100%;
+    height: 100%;
+    
+    left: 0%;
+    top: 0%;
+    
+    backdrop-filter: brightness(50%);
+}
+
+.h1-close-btn-parent {
+    position: fixed;
+    
+    left: 77%;
+    top: 8%;
+    
+    background-color:white;
+    
+    padding: 10px;
+    border-radius: 20px;
+    
+    font-size: 20px;
+}

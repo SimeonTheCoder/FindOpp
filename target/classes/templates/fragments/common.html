@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/minibox.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        nav div {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        @media screen and (max-width: 600px) {
+            p {
+                font-size: 15px;
+            }
+
+            label {
+                font-size: 15px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            nav {
+                position: unset;
+
+                flex-direction: column;
+                padding: 0px;
+                align-items: flex-start;
+
+                padding: 0px;
+
+                width: 100%;
+            }
+
+            nav div {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <script src="scripts/themes.js"></script>
+            <div style="color: yellow; font-weight: 900; font-size: 25px;">
+                <a th:unless="${@loggedUser.logged}" th:href="@{/}" style="color: yellow; font-weight: 900; font-size: 25px;">FindOpp</a>
+                <a th:if="${@loggedUser.logged}" th:href="@{/home}" style="color: yellow; font-weight: 900; font-size: 25px;">FindOpp</a>
+                <button style="display: inline; background: none; border: none;" class="btn-toggle">🌙</button>  
+            </div>
+
+            <div>
+                <!-- <a th:if="${@loggedUser.logged}" th:href="@{/home}">Home</a> -->
+                <!-- <a th:unless="${@loggedUser.logged}" th:href="@{/login}">Home</a> -->
+                <a th:href="@{/browse-competitions(id=-1)}">Състезания</a>
+                <a th:href="@{/browse-concourses(id=-1)}">Конкурси</a>
+                <a th:href="@{/browse-olympiads(id=-1)}">Олимпиади</a>
+                <a th:href="@{/browse-jobs}">Стажове</a>
+                <a th:href="@{/browse-news}">Новини</a>
+                <a th:if="${@loggedUser.admin}" th:href="@{/manage-reviews}">Отзиви</a>
+                <a th:href="@{/about}">За нас</a>
+            </div>
+
+            <div>
+                <a th:if="${@loggedUser.logged}" th:href="@{/account}">
+                    <span th:text="${@loggedUser.username}"/>
+                </a>
+                <a th:if="${@loggedUser.logged}" th:href="@{/logout}">
+                    <i class="fa fa-sign-out"></i>
+                </a>
+                <div th:unless="${@loggedUser.logged}">
+                    <a th:href="@{/login}">Вход</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <footer>
+        <div style="color: white; background-color: #4e4689; padding: 20px; border-radius: 20px; font-weight: 900; font-size: 17px;">
+            FindOpp е безплатна платформа и за учениците, и за компаниите и институциите, които публикуват възможности. © FindOpp 2024
+        </div>
+    </footer>
+</body>
+
+</html>

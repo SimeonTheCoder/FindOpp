@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$USER_HOME$/Documents/dumps/Dump20240217 (1)/findopp_competition_categories.sql" dialect="MySQL" />
+    <file url="file://$USER_HOME$/Documents/dumps/Dump20240217 (1)/findopp_competitions.sql" dialect="MySQL" />
+    <file url="file://$USER_HOME$/Documents/dumps/Dump20240217 (1)/findopp_jobs.sql" dialect="MySQL" />
+    <file url="file://$USER_HOME$/Documents/dumps/Dump20240217 (1)/findopp_news.sql" dialect="MySQL" />
+    <file url="file://$USER_HOME$/Documents/dumps/Dump20240217 (1)/findopp_users.sql" dialect="MySQL" />
+  </component>
+</project>

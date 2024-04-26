@@ -1,0 +1,36 @@
+#frame {
+    box-shadow: #0000009c 0px 0px 200px 0px;
+    position: fixed;
+    
+    width: 70%;
+    height: 70%;
+    
+    left: 15%;
+    top: 15%;
+    
+    background-color: white;
+    
+    border: 0px;
+    border-radius: 20px;
+}
+
+@media screen and (max-width: 600px) {
+    .competition-listing {
+        flex-direction: column;
+
+        margin-left: 0px;
+        margin-right: 0px;
+
+        height: unset;
+
+        width: 90%;
+    }
+
+    .listing-content {
+        width: 100%;
+    }
+
+    .container-image {
+        width: 100%;
+    }
+}

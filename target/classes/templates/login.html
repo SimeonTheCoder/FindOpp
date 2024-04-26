@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html style="height: 94%" lang="en">
+
+<head th:replace="~{fragments/common::head}"></head>
+
+<body style="height: 94%;">
+    <div class="all-content">
+        <header th:replace="~{fragments/common::nav}"></header>
+        <link rel="stylesheet" href="/css/login.css"/>
+
+        <div class="form-div">
+            <div class="form-content">
+                <h1>
+                    Вход
+                </h1>
+
+                <p>
+                    <a th:href="@{/register}" style="color: blue; padding: 0px;">Регистрирайте се</a> ако нямате акаунт.
+                </p>
+
+                <div th:if="${error}" class="text-danger">
+                    Вход неуспешен
+                </div>
+
+                <div class="form-container">
+                    <form th:object="${userLoginBindingModel}" th:method="POST" th:action="@{/login}">
+                        <label>Потребителско име:</label>
+                        <input th:field="*{username}" type="text" name="username" th:errorclass="bg-danger">
+                        <br th:if="${#fields.hasErrors('username')}">
+                        <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger">Username error message</small>
+
+                        <label>Парола:</label>
+                        <input th:field="*{password}" type="password" name="password" th:errorclass="bg-danger">
+                        <br th:if="${#fields.hasErrors('password')}">
+                        <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger">Password error message</small>
+
+                        <input type="submit" value="Вход" class="btn">
+                    </form>
+                </div>
+            </div>
+
+            <!-- <h1 class="big-text">
+                Добре довшли във FindOpp!
+            </h1> -->
+
+            <img src="img/Login_girl.png" style="object-fit:unset; width: 600px; height: 600px; margin-bottom: -60px;">
+        </div>
+
+        <br>
+    </div>
+    <footer th:replace="~{fragments/common::footer}"></footer>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html style="height: 94%;" lang="en">
+
+<head>
+
+    <head th:replace="~{fragments/common::head}"></head>
+    <script src="scripts/popup.js"></script>
+</head>
+
+<body style="height: 94%;">
+    <div class="all-content">
+        <div class="video-parent">
+            <video playsinline autoplay muted nocontrols loop>
+                <source src="video/Coming black.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <header th:replace="~{fragments/common::nav}"></header>
+
+        <div style="visibility: hidden;" id="page-display">
+            <div class="dark-overlay">
+                <h1 class="h1-close-btn-parent">
+                    <a id="close-btn" href="#">❎Close</a>
+                </h1>
+            </div>
+            <iframe id="frame" class="frame-box" th:src="@{/competition-info-min/2}"></iframe>
+        </div>
+
+        <div th:if="${reviews.size == 0}">
+            <h1>
+                Изглежда е празно!
+            </h1>
+        </div>
+
+        <div th:each="currreview : ${reviews}">
+            <div class="competition-listing">
+                <div class="container-image">
+                    <img th:src="@{/api/competition/image(id=${currreview.reviewedcompetition.id})}" alt="Image">
+                </div>
+
+                <div class="listing-content">
+                    <h1>
+                        <!-- <a th:href="@{/competition-info/{id}(id=${currreview.reviewedcompetition.id})}"><span th:text="${currreview.reason}"></span></a> -->
+                        <a class="review-link" th:id="${currreview.id}" href="javascript:void(0)"><span
+                                th:text="${currreview.reason}"></span></a>
+                    </h1>
+                    <p>
+                        <span th:text="${currreview.description}"></span>
+                    </p>
+                    <p>
+                        <span th:text="${#temporals.format(currreview.reviewTime, 'dd/MM/YY HH:mm')}"></span> by <span
+                            th:text="${currreview.reviewedBy.username}"></span>
+                    </p>
+                </div>
+
+                <div class="buy-section">
+                    <a th:href="@{/review-approve/{id}(id=${currreview.id})}"><input
+                            style="background-color: darkgreen;" type="button" value="Approve"
+                            class="btn home-btn"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/common::footer}"></footer>
+</body>
+
+</html>

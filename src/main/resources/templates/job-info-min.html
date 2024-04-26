@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/common::head}"></head>
+
+<body>
+    <div class="info-image">
+        <img th:src="@{/api/job/image(id=${job.id})}" alt="Image">
+    </div>
+
+    <div class="competition-card">
+        <h1>
+            <span th:text="${job.title}"></span>
+        </h1>
+
+        <p>
+            <span th:text="${job.description}"></span>
+        </p>
+
+        <p>
+            <a th:href="${job.link}" target="_blank" style="color: blue; text-decoration: underline;">Повече информация</a>
+        </p>
+
+        <a th:href="@{/enroll/{id}(id=${job.id})}"><input type="button" value="Enroll" class="btn home-btn"></a>
+    </div>
+</body>
+
+</html>
